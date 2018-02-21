@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using NSubstitute;
 
 namespace MyLogAn.UnitTests
 {
@@ -225,13 +226,12 @@ namespace MyLogAn.UnitTests
         [Test]
         public void Analyze_TooShortFileName_CallLogger()
         {
-            var logger = new FakeLogger();
-            var analyzer = new LogAnalyzer(logger);
+            var logger = Substitute.For<ILogger>();
+            var analyzer = new LogAnalyzer(logger) { MinNameLength = 6 };
 
-            analyzer.MinNameLength = 6;
             analyzer.Analyze("a.txt");
 
-            StringAssert.Contains("too short", logger.LastError);
+            logger.Received().LogError("Filename too short: a.txt");
         }
 
         private static LogAnalyzer MakeAnalyzer()
