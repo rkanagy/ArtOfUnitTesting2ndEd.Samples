@@ -6,6 +6,7 @@ namespace MyLogAn
     {
         private readonly IWebService _service;
         private readonly IEmailService _email;
+        private ILogger _logger;
 
         // using parameter injection
         public IExtensionManager ExtensionManager { private get; set; }
@@ -51,8 +52,14 @@ namespace MyLogAn
             _email = email;
         }
 
+        public LogAnalyzer(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public bool WasLastFileNameValid { get; private set; }
-        
+        public int MinNameLength { get; set; }
+
         public bool IsValidLogFileName(string fileName)
         {
             try
@@ -73,16 +80,17 @@ namespace MyLogAn
 
         public void Analyze(string fileName)
         {
-            if (fileName.Length >= 8) return;
+            if (fileName.Length >= MinNameLength) return;
 
             try
             {
-                _service.LogError("Filename too short: " + fileName);
+                _logger?.LogError($"Filename too short: {fileName}");
+                _service?.LogError("Filename too short: " + fileName);
             }
             catch (Exception ex)
             {
                 var emailInfo = new EmailInfo(ex.Message, "someone@somewhere.com", "can't log");
-                _email.SendEmail(emailInfo);
+                _email?.SendEmail(emailInfo);
             }
         }
     }

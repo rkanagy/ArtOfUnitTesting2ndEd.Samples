@@ -200,7 +200,7 @@ namespace MyLogAn.UnitTests
         public void Analyze_TooShortFileName_CallsWebService()
         {
             var mockService = new FakeWebService();
-            var log = new LogAnalyzer(mockService);
+            var log = new LogAnalyzer(mockService) { MinNameLength = 8 };
             const string tooShortFileName = "abc.ext";
 
             log.Analyze(tooShortFileName);
@@ -212,15 +212,26 @@ namespace MyLogAn.UnitTests
         public void Analyze_WebServiceThrows_SendsEmail()
         {
             var stubService = new FakeWebService { ToThrow = new Exception("fake exception") };
-
             var mockEmail = new FakeEmailService();
-
-            var log = new LogAnalyzer(stubService, mockEmail);
+            var log = new LogAnalyzer(stubService, mockEmail) { MinNameLength = 8 };
             const string tooShortFileName = "abc.ext";
+
             log.Analyze(tooShortFileName);
 
             var expectedEmail = new EmailInfo("fake exception", "someone@somewhere.com", "can't log");
             Assert.AreEqual(expectedEmail, mockEmail.Email);
+        }
+
+        [Test]
+        public void Analyze_TooShortFileName_CallLogger()
+        {
+            var logger = new FakeLogger();
+            var analyzer = new LogAnalyzer(logger);
+
+            analyzer.MinNameLength = 6;
+            analyzer.Analyze("a.txt");
+
+            StringAssert.Contains("too short", logger.LastError);
         }
 
         private static LogAnalyzer MakeAnalyzer()

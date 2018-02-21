@@ -56,6 +56,7 @@
     <Compile Include="IEmailService.cs" />
     <Compile Include="IExtensionManager.cs" />
     <Compile Include="IExtensionManagerFactory.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="IWebService.cs" />
     <Compile Include="LogAnalyzer.cs" />
     <Compile Include="LogAnalyzerUsingFactoryMethod.cs" />
