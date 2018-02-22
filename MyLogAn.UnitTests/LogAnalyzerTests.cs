@@ -244,6 +244,18 @@ namespace MyLogAn.UnitTests
             Assert.IsTrue(fakeRules.IsValidLogFileName("anything.txt"));
         }
 
+        [Test]
+        public void Returns_ArgAny_Throws()
+        {
+            var fakeRules = Substitute.For<IFileNameRules>();
+
+            fakeRules
+                .When(x => x.IsValidLogFileName(Arg.Any<string>()))
+                .Do(context => throw new Exception("fake exception"));
+
+            Assert.Throws<Exception>(() => fakeRules.IsValidLogFileName("anything"));
+        }
+
         private static LogAnalyzer MakeAnalyzer()
         {
             // be sure to use default extension manager with the file system dependency
