@@ -68,6 +68,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyLogAn2\MyLogAn2.csproj">
+      <Project>{a3628d79-d48c-452a-b293-61814a5c5930}</Project>
+      <Name>MyLogAn2</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
