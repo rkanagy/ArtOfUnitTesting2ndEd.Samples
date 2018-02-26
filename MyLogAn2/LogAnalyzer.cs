@@ -2,7 +2,7 @@
 {
     public class LogAnalyzer
     {
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public int MinNameLength;
 
