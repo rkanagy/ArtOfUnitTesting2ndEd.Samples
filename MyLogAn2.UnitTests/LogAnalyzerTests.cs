@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace MyLogAn2.UnitTests
@@ -28,6 +29,18 @@ namespace MyLogAn2.UnitTests
             fakeRules.IsValidLogFileName(Arg.Any<string>()).Returns(true);
 
             Assert.IsTrue(fakeRules.IsValidLogFileName("anything.txt"));
+        }
+
+        [Test]
+        public void Returns_ArgAny_Throws()
+        {
+            var fakeRules = Substitute.For<IFileNameRules>();
+
+            fakeRules
+                .When(x => x.IsValidLogFileName(Arg.Any<string>()))
+                .Do(context => throw new Exception("fake exception"));
+
+            Assert.Throws<Exception>(() => fakeRules.IsValidLogFileName("anything.txt"));
         }
     }
 }
