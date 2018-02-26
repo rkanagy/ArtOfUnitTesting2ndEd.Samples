@@ -1,4 +1,4 @@
-﻿using Castle.Core.Logging;
+﻿using NSubstitute;
 using NUnit.Framework;
 
 namespace MyLogAn2.UnitTests
@@ -9,7 +9,7 @@ namespace MyLogAn2.UnitTests
         [Test]
         public void Analyze_TooShortFileName_CallLogger()
         {
-            var logger = new FakeLogger();
+            var logger = Substitute.For<ILogger>();
             var analyzer = new LogAnalyzer(logger)
             {
                 MinNameLength = 6
@@ -17,17 +17,7 @@ namespace MyLogAn2.UnitTests
 
             analyzer.Analyze("a.txt");
 
-            StringAssert.Contains("too short", logger.LastError);
-        }
-    }
-
-    public class FakeLogger : ILogger
-    {
-        public string LastError;
-
-        public void LogError(string message)
-        {
-            LastError = message;
+            logger.Received().LogError("Filename too short: a.txt");
         }
     }
 }
