@@ -25,9 +25,9 @@ namespace MyLogAn2.UnitTests
         {
             var fakeRules = Substitute.For<IFileNameRules>();
 
-            fakeRules.IsValidLogFileName("strict.txt").Returns(true);
+            fakeRules.IsValidLogFileName(Arg.Any<string>()).Returns(true);
 
-            Assert.IsTrue(fakeRules.IsValidLogFileName("strict.txt"));
+            Assert.IsTrue(fakeRules.IsValidLogFileName("anything.txt"));
         }
     }
 }
