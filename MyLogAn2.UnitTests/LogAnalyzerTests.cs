@@ -46,38 +46,17 @@ namespace MyLogAn2.UnitTests
         [Test]
         public void Analyze_LoggerThrows_CallsWebService()
         {
-            var mockWebService = new FakeWebService();
-            var stubLogger = new FakeLogger2 { WillThrow = new Exception("fake exception") };
+            var mockWebService = Substitute.For<IWebService>();
+            var stubLogger = Substitute.For<ILogger>();
+            stubLogger
+                .When(logger => logger.LogError(Arg.Any<string>()))
+                .Do(info => throw new Exception("fake exception"));
+            var analyzer = new LogAnalyzer2(stubLogger, mockWebService) { MinNameLength = 10 };
 
-            var analyzer2 = new LogAnalyzer2(stubLogger, mockWebService) { MinNameLength = 8 };
+            analyzer.Analyze("Short.txt");
 
-            var tooShortFileName = "abc.txt";
-            analyzer2.Analyze(tooShortFileName);
-
-            Assert.That(mockWebService.MessageToWebService, Does.Contain("fake exception"));
-        }
-    }
-
-    public class FakeWebService : IWebService
-    {
-        public string MessageToWebService;
-
-        public void Write(string message)
-        {
-            MessageToWebService = message;
-        }
-    }
-
-    public class FakeLogger2 : ILogger
-    {
-        public Exception WillThrow;
-
-        public void LogError(string message)
-        {
-            if (WillThrow != null)
-            {
-                throw WillThrow;
-            }
+            mockWebService.Received()
+                .Write(Arg.Is<string>(s => s.Contains("fake exception")));
         }
     }
 }
