@@ -43,10 +43,12 @@
     <Compile Include="ErrorInfo.cs" />
     <Compile Include="IFileNameRules.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="IView.cs" />
     <Compile Include="IWebService.cs" />
     <Compile Include="LogAnalyzer.cs" />
     <Compile Include="LogAnalyzer2.cs" />
     <Compile Include="LogAnalyzer3.cs" />
+    <Compile Include="Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
