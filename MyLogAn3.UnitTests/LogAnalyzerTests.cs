@@ -3,21 +3,16 @@
 namespace MyLogAn3.UnitTests
 {
     [TestFixture]
-    public class LogAnalyzerTests
+    public class LogAnalyzerTests : BaseTestsClass
     {
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {
+            FakeTheLogger();
+
             var analyzer = new LogAnalyzer();
             analyzer.Analyze("myemptyfile.txt");
             // rest of test
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            // need to reset a static resource between tests
-            LoggingFacility.Logger = null;
         }
     }
 }
