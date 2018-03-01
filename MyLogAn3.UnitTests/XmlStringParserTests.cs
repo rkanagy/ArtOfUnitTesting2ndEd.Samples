@@ -3,17 +3,17 @@
 namespace MyLogAn3.UnitTests
 {
     [TestFixture]
-    public class StandardStringParserTests : TemplateStringParserTests
+    public class XmlStringParserTests : TemplateStringParserTests
     {
         private IStringParser GetParser(string input)
         {
-            return new StandardStringParser(input);
+            return new XmlStringParser(input);
         }
 
         [Test]
         public override void TestGetStringVersionFromHeader_SingleDigit_Found()
         {
-            var parser = GetParser("header;version=1;\n");
+            var parser = GetParser("<Header>1</Header>");
 
             var versionFromHeader = parser.GetStringVersionFromHeader();
 
@@ -23,7 +23,7 @@ namespace MyLogAn3.UnitTests
         [Test]
         public override void TestGetStringVersionFromHeader_WithMinorVersion_Found()
         {
-            var parser = GetParser("header;version=1.1;\n");
+            var parser = GetParser("<Header>1.1</Header>");
 
             var versionFromHeader = parser.GetStringVersionFromHeader();
 
@@ -33,7 +33,7 @@ namespace MyLogAn3.UnitTests
         [Test]
         public override void TestGetStringVersionFromHeader_WithRevision_Found()
         {
-            var parser = GetParser("header;version=1.1.1;\n");
+            var parser = GetParser("<Header>1.1.1</Header>");
 
             var versionFromHeader = parser.GetStringVersionFromHeader();
 

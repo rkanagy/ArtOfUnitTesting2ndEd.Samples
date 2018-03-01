@@ -48,6 +48,7 @@
     <Compile Include="LoggingFacility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StandardStringParser.cs" />
+    <Compile Include="XmlStringParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
