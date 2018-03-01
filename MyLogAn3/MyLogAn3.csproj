@@ -45,6 +45,7 @@
     <Compile Include="LogAnalyzer.cs" />
     <Compile Include="LoggingFacility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandardStringParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
