@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseStringParser.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="IStringParser.cs" />
     <Compile Include="LogAnalyzer.cs" />
     <Compile Include="LoggingFacility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

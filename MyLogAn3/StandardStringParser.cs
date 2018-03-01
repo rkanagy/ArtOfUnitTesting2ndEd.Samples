@@ -2,24 +2,28 @@
 
 namespace MyLogAn3
 {
-    public class StandardStringParser
+    public class StandardStringParser : BaseStringParser
     {
-        private readonly string _input;
-
-        public StandardStringParser(string input)
+        public StandardStringParser(string input) : base(input)
         {
-            _input = input;
+            // nothing to do
         }
 
-        public string GetStringVersionFromHeader()
+        public override bool HasCorrectHeader()
+        {
+            // not implemented
+            return false;
+        }
+
+        public override string GetStringVersionFromHeader()
         {
             const string versionTag = "version=";
             const string delimiter = ";";
 
-            var versionIdx = _input.IndexOf(versionTag, StringComparison.Ordinal);
-            var delimiterIdx = _input.IndexOf(delimiter, versionIdx, StringComparison.Ordinal);
+            var versionIdx = StringToParse.IndexOf(versionTag, StringComparison.Ordinal);
+            var delimiterIdx = StringToParse.IndexOf(delimiter, versionIdx, StringComparison.Ordinal);
             var versionStart = versionIdx + versionTag.Length;
-            var version = _input.Substring(versionStart, delimiterIdx - versionStart);
+            var version = StringToParse.Substring(versionStart, delimiterIdx - versionStart);
 
             return version;
         }
